@@ -38,7 +38,7 @@
     <br>
 
     <h2 id="hint">游戏环节1结束，请填写纸质问卷</h2>
-    <h4>（你可以休息2分钟）</h4>
+    <h4 id="sub_hint">（你可以休息2分钟）</h4>
     <br>
     <br>
 <!--    <h3><span id="second">50</span>秒后自动跳转..</h3>-->
@@ -77,12 +77,14 @@
 
   // 更改环节题词
   let hint=document.getElementById("hint");
+  let sub_hint=document.getElementById("sub_hint");
   hint.textContent = "游戏环节" + (nth_game-1) + "结束，请填写纸质问卷";
 
   // 如果是第三环节，就不显示按钮
   let btn = document.getElementById("btn");
   if (nth_game-1 >=3) {
     btn.style.display = "none"
+    sub_hint.textContent = "（实验结束）"
   }
 
   //实现按钮倒计时功能

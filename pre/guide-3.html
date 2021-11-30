@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="清华LOGO.png" type="image/x-icon">
+
+  <script>;(function(){var w=parseInt(window.screen.width),s=w/640,u=navigator.userAgent.toLowerCase(),m='<meta name="viewport" content="width=640,';if(/android (\d+\.\d+)/.test(u)){if(parseFloat(RegExp.$1)>2.3)m+='minimum-scale='+s+',maximum-scale='+s+',';}else{m+='user-scalable=no,';}m+='target-densitydpi=device-dpi">';document.write(m);}());</script>
+  <link rel="stylesheet" href="guide.css">
+  <title>结果公布</title>
+
+  <style type="text/css">
+    #cp_result {
+      background-image: url(result_board2.png) ;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 80%;
+      height: 370px;
+      text-align: center;
+      margin-left: 10%;
+    }
+
+    #score, #opponent_score {
+      font-weight: bold;
+      font-size: 26px;
+      color: black;
+    }
+
+  </style>
+</head>
+<body>
+
+<div id="main" class="container">
+
+  <div id="header">
+    <img src="tsinghua_banner_2.png" width="100%">
+    <br>
+
+    <div id="cp_result">
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <h1 id="cp_word" style="color: #f75000; font-size: 50px">胜利</h1>
+      <p id="point_vs" style="font-size: 20px; color:grey"> （你）<span id="score">100</span> : <span id="opponent_score">80</span>（对手）</p>
+    </div>
+
+
+    <br/>
+    <h3>正式游戏阶段结束，接下来你需要完成一些问卷</h3>
+<!--    <h3><span id="second">50</span>秒后自动跳转..</h3>-->
+    <article>
+      <p><span id="second">10</span>秒后自动跳转..</p>
+      <button onclick="clickButton()">直接开始</button>
+    </article>
+  </div>
+
+</div>
+
+<script>
+
+  // 记录该页面开始的时间
+  let timestamp = (new Date()).valueOf();
+
+  var num=document.getElementById("second").innerHTML;
+
+  function getUrlParameter(name){
+    name = name.replace(/[]/,"\[").replace(/[]/,"\[").replace(/[]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec(window.parent.location.href );
+    if( results == null ) return ""; else {
+      return results[1];
+    }
+  };
+
+  // 显示文字
+  if (getUrlParameter('c') === 'a') {
+    document.getElementById("cp_word").innerHTML = "胜利"
+    // 显示得分
+    document.getElementById("score").innerHTML = getUrlParameter('s')
+    document.getElementById("opponent_score").innerHTML = getUrlParameter('os')
+    }
+  else if (getUrlParameter('c') === 'b') {
+    document.getElementById("cp_word").innerHTML = "失败"
+    // 显示得分
+    document.getElementById("score").innerHTML = getUrlParameter('s')
+    document.getElementById("opponent_score").innerHTML = getUrlParameter('os')
+    }
+  else {document.getElementById("cp_word").innerHTML = "竞争结果将在实验结束后公布";
+    document.getElementById("cp_word").style.fontSize = "42px"
+    document.getElementById("point_vs").innerHTML = "你的分数：" + getUrlParameter('s') + "分"
+    document.getElementById("point_vs").style.fontWeight = "bold"
+  }
+
+
+
+  // 在ext的末尾加上这关的难度以及是第几关
+  link = "./questionare.html" + '?c=' + getUrlParameter('c') + '&f=' + getUrlParameter('f') +
+         '&cp=' + getUrlParameter('cp') + '&ext=' + getUrlParameter('ext')
+          + '&tchain=' + getUrlParameter('tchain') + '_' + timestamp
+
+  if (getUrlParameter('dev') === '1') {
+    link = link + '&dev=1'
+  }
+
+  function count(){
+    num--;
+    document.getElementById("second").innerHTML=num;
+    //通过window的location和history对象来控制网页的跳转
+    if(num==0){
+      window.location.assign(link);
+    }
+  }
+  window.setInterval("count()",1000);
+
+  function back(){
+    window.history.back();
+  }
+
+  function clickButton() {
+    window.location.href=link
+  }
+
+
+
+</script>
+
+</body>
+</html>
+

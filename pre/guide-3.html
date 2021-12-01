@@ -38,13 +38,13 @@
     <br>
 
     <h2 id="hint">游戏环节1结束，请填写纸质问卷</h2>
-    <h4 id="sub_hint">（你可以休息2分钟）</h4>
+    <h4 id="sub_hint">（你可以休息90秒）</h4>
     <br>
     <br>
 <!--    <h3><span id="second">50</span>秒后自动跳转..</h3>-->
     <article>
 
-      <button onclick="clickButton()" id="btn" disabled="disabled">填写完成，开始下一环节实验（120s）</button>
+      <button onclick="clickButton()" id="btn" disabled="disabled">填写完成，开始下一环节实验（90s）</button>
     </article>
   </div>
 
@@ -88,7 +88,7 @@
   }
 
   //实现按钮倒计时功能
-  let tim=119;
+  let tim=89;
   if (getUrlParameter('dev') === '1') {
     tim = 3
   }

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="清华LOGO.png" type="image/x-icon">
+
+  <script>;(function(){var w=parseInt(window.screen.width),s=w/640,u=navigator.userAgent.toLowerCase(),m='<meta name="viewport" content="width=640,';if(/android (\d+\.\d+)/.test(u)){if(parseFloat(RegExp.$1)>2.3)m+='minimum-scale='+s+',maximum-scale='+s+',';}else{m+='user-scalable=no,';}m+='target-densitydpi=device-dpi">';document.write(m);}());</script>
+  <link rel="stylesheet" href="guide.css">
+  <title>环节中止</title>
+
+  <style type="text/css">
+    #cp_result {
+      background-image: url(result_board2.png) ;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 80%;
+      height: 370px;
+      text-align: center;
+      margin-left: 10%;
+    }
+
+    #score, #opponent_score {
+      font-weight: bold;
+      font-size: 26px;
+      color: black;
+    }
+
+  </style>
+</head>
+<body>
+
+<div id="main" class="container">
+
+  <div id="header">
+    <img src="tsinghua_banner_2.png" width="100%">
+    <br>
+    <br>
+    <br>
+
+    <h2 id="hint">游戏环节1结束，请填写纸质问卷</h2>
+    <h4 id="sub_hint">（你可以休息90秒）</h4>
+    <br>
+    <br>
+<!--    <h3><span id="second">50</span>秒后自动跳转..</h3>-->
+    <article>
+
+      <button onclick="clickButton()" id="btn" disabled="disabled">填写完成，开始下一环节实验（90s）</button>
+    </article>
+  </div>
+
+</div>
+
+<script>
+
+  function getUrlParameter(name){
+    name = name.replace(/[]/,"\[").replace(/[]/,"\[").replace(/[]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec(window.parent.location.href );
+    if( results == null ) return ""; else {
+      return results[1];
+    }
+  };
+
+  let condition = getUrlParameter('c')
+  let seq = getUrlParameter('seq')
+  let nth_game = parseInt(getUrlParameter('f')) + 1  //转换成整数
+  let ext = getUrlParameter('ext')
+  let current_music = seq[nth_game-1]  // -1是因为数组是从0开始的
+
+  var link = '../practice/dist/index.html?' + 'c=' + condition + '&seq=' + seq + '&f=' + nth_game + '&msc=' + current_music + '&ext=' + ext ;
+
+
+  if (getUrlParameter('dev') === '1') {
+    link = link + '&dev=1'
+  }
+
+  // 更改环节题词
+  let hint=document.getElementById("hint");
+  let sub_hint=document.getElementById("sub_hint");
+  hint.textContent = "游戏环节" + (nth_game-1) + "结束，请填写纸质问卷";
+
+  // 如果是第三环节，就不显示按钮
+  let btn = document.getElementById("btn");
+  if (nth_game-1 >=2) {
+    btn.style.display = "none"
+    sub_hint.textContent = "（实验结束）"
+  }
+
+  //实现按钮倒计时功能
+  let tim=89;
+  if (getUrlParameter('dev') === '1') {
+    tim = 3
+  }
+
+  function aaa(){
+    if(tim<=0)
+    {
+      btn.textContent="填写完成，开始下一环节实验";
+      btn.disabled="";
+    }
+    else
+    {
+      btn.textContent="填写完成，开始下一环节实验 ("  +tim+"s)";
+      tim--;
+    }
+  }
+  setInterval("aaa()",1000);
+
+
+  function back(){
+    window.history.back();
+  }
+
+  function clickButton() {
+    window.location.href=link
+  }
+
+
+
+</script>
+
+</body>
+</html>
+
